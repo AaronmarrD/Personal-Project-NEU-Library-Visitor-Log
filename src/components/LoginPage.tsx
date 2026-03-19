@@ -1,6 +1,7 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../context/AuthContext";
-import { BookOpen, ShieldAlert } from "lucide-react";
+import { ShieldAlert } from "lucide-react";
+const NEU_LOGO = "https://upload.wikimedia.org/wikipedia/en/thumb/c/c6/New_Era_University.svg/250px-New_Era_University.svg.png";
 
 export default function LoginPage() {
   const { loginWithGoogle, blockedMessage } = useAuth();
