@@ -10,8 +10,8 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
       <div className="animate-fade-up bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full text-center">
         {}
-        <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl mb-6 shadow-lg">
-          <BookOpen className="w-12 h-12 text-white" />
+         <div className="inline-flex items-center justify-center w-24 h-24 bg-white rounded-2xl mb-6 shadow-lg border border-gray-100 p-2">
+          <img src={NEU_LOGO} alt="NEU Seal" className="w-full h-full object-contain" />
         </div>
 
         <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">NEU Library</h1>
