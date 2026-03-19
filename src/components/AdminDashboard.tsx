@@ -25,7 +25,6 @@ import {
 } from "lucide-react";
 import Header from "./Header";
 
-/* ── Helpers ──────────────────────────────────────────────────────────────── */
 function startOfDay(d: Date): Date {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
 }
@@ -55,13 +54,11 @@ function isEmployee(role: string) {
   return ["Faculty", "Staff", "Employee"].includes(role);
 }
 
-/* ── Filter logic ─────────────────────────────────────────────────────────── */
 function filterLogs(logs: VisitLog[], f: StatsFilter): VisitLog[] {
   const now = new Date();
   return logs.filter((log) => {
     const d = new Date(log.timestamp);
 
-    // Date
     if (f.dateFilter === "today" && startOfDay(d).getTime() !== startOfDay(now).getTime())
       return false;
     if (f.dateFilter === "week" && d < startOfWeek(now)) return false;
@@ -74,20 +71,16 @@ function filterLogs(logs: VisitLog[], f: StatsFilter): VisitLog[] {
       }
     }
 
-    // Reason
     if (f.reason && log.reason !== f.reason) return false;
 
-    // College
     if (f.college && log.college !== f.college) return false;
 
-    // Employee only
     if (f.employeeOnly && !isEmployee(log.visitorRole)) return false;
 
     return true;
   });
 }
 
-/* ── Stat Card ────────────────────────────────────────────────────────────── */
 function StatCard({
   icon,
   label,
@@ -112,7 +105,6 @@ function StatCard({
   );
 }
 
-/* ── Bar chart (pure CSS) ─────────────────────────────────────────────────── */
 function HorizontalBar({
   data,
   title,
@@ -150,13 +142,9 @@ function HorizontalBar({
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
-   ADMIN DASHBOARD
-   ═══════════════════════════════════════════════════════════════════════════════ */
 export default function AdminDashboard() {
   const { visitLogs, getAllProfiles, blockUser, unblockUser } = useData();
 
-  // Filters
   const [filters, setFilters] = useState<StatsFilter>({
     dateFilter: "today",
     customStart: "",
@@ -166,24 +154,18 @@ export default function AdminDashboard() {
     employeeOnly: false,
   });
 
-  // Tabs
   const [tab, setTab] = useState<"stats" | "logs" | "visitors">("stats");
 
-  // Search for logs
   const [logSearch, setLogSearch] = useState("");
 
-  // Block modal
   const [blockModal, setBlockModal] = useState<UserProfile | null>(null);
   const [blockReason, setBlockReason] = useState("");
 
-  // Refresh profiles
   const [profileKey, setProfileKey] = useState(0);
   const profiles = useMemo(() => getAllProfiles(), [getAllProfiles, profileKey]);
 
-  /* Filtered logs */
   const filtered = useMemo(() => filterLogs(visitLogs, filters), [visitLogs, filters]);
 
-  /* Search within logs tab */
   const searchedLogs = useMemo(() => {
     if (!logSearch) return filtered;
     const q = logSearch.toLowerCase();
@@ -197,21 +179,18 @@ export default function AdminDashboard() {
     );
   }, [filtered, logSearch]);
 
-  /* Computed stats */
   const stats = useMemo(() => {
     const unique = new Set(filtered.map((l) => l.visitorEmail)).size;
     const students = filtered.filter((l) => l.visitorRole === "Student").length;
     const faculty = filtered.filter((l) => l.visitorRole === "Faculty").length;
     const staff = filtered.filter((l) => isEmployee(l.visitorRole)).length;
 
-    // By reason
     const reasonMap = new Map<string, number>();
     filtered.forEach((l) => reasonMap.set(l.reason, (reasonMap.get(l.reason) || 0) + 1));
     const byReason = Array.from(reasonMap.entries())
       .map(([label, value]) => ({ label, value }))
       .sort((a, b) => b.value - a.value);
 
-    // By college
     const collegeMap = new Map<string, number>();
     filtered.forEach((l) => collegeMap.set(l.college, (collegeMap.get(l.college) || 0) + 1));
     const byCollege = Array.from(collegeMap.entries())
@@ -221,7 +200,6 @@ export default function AdminDashboard() {
     return { total: filtered.length, unique, students, faculty, staff, byReason, byCollege };
   }, [filtered]);
 
-  /* Handlers */
   const setDateFilter = (df: DateFilterType) =>
     setFilters((p) => ({ ...p, dateFilter: df }));
 
@@ -238,7 +216,6 @@ export default function AdminDashboard() {
     setProfileKey((k) => k + 1);
   };
 
-  /* PDF export */
   const exportPDF = () => {
     const doc = new jsPDF({ orientation: "landscape" });
     doc.setFontSize(16);
@@ -279,19 +256,18 @@ export default function AdminDashboard() {
     doc.save("NEU_Library_Report.pdf");
   };
 
-  /* ── Render ─────────────────────────────────────────────────────────────── */
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* ── FILTERS BAR ──────────────────────────────────────────────── */}
+        {}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-6">
           <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">
             Filters
           </h2>
 
-          {/* Date filter */}
+          {}
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <span className="text-xs font-semibold text-gray-500 mr-1">Period:</span>
             {(
@@ -333,7 +309,7 @@ export default function AdminDashboard() {
             )}
           </div>
 
-          {/* Other filters */}
+          {}
           <div className="flex flex-wrap items-center gap-3">
             <select
               value={filters.reason}
@@ -373,7 +349,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* ── STAT CARDS ────────────────────────────────────────────────── */}
+        {}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
           <StatCard
             icon={<Users className="w-6 h-6 text-blue-600" />}
@@ -407,7 +383,7 @@ export default function AdminDashboard() {
           />
         </div>
 
-        {/* ── TABS ──────────────────────────────────────────────────────── */}
+        {}
         <div className="flex gap-1 mb-4">
           {(
             [
@@ -430,7 +406,7 @@ export default function AdminDashboard() {
           ))}
         </div>
 
-        {/* ── TAB: Statistics ───────────────────────────────────────────── */}
+        {}
         {tab === "stats" && (
           <div className="grid md:grid-cols-2 gap-6 animate-fade-up">
             <HorizontalBar
@@ -446,10 +422,10 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* ── TAB: Visit Logs ──────────────────────────────────────────── */}
+        {}
         {tab === "logs" && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden animate-fade-up">
-            {/* Toolbar */}
+            {}
             <div className="p-4 border-b border-gray-100 flex flex-wrap items-center gap-3">
               <div className="relative flex-1 min-w-[200px]">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -469,7 +445,7 @@ export default function AdminDashboard() {
               </button>
             </div>
 
-            {/* Table */}
+            {}
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -537,7 +513,7 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* ── TAB: Manage Visitors ─────────────────────────────────────── */}
+        {}
         {tab === "visitors" && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden animate-fade-up">
             <div className="overflow-x-auto">
@@ -624,7 +600,7 @@ export default function AdminDashboard() {
         )}
       </main>
 
-      {/* ── BLOCK MODAL ──────────────────────────────────────────────────── */}
+      {}
       {blockModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-fade-up">
