@@ -3,9 +3,6 @@ import { useAuth } from "../context/AuthContext";
 import { COLLEGES, VISITOR_ROLES } from "../config";
 import { UserCircle, Users, Shield, BookOpen } from "lucide-react";
 
-/* ═══════════════════════════════════════════════════════════════════════════════
-   PROFILE SETUP — shown once for first-time users
-   ═══════════════════════════════════════════════════════════════════════════════ */
 export function ProfileSetup() {
   const { currentUser, completeProfile } = useAuth();
   const [college, setCollege] = useState("");
@@ -37,7 +34,7 @@ export function ProfileSetup() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Role */}
+          {}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">I am a…</label>
             <div className="grid grid-cols-2 gap-2">
@@ -58,7 +55,7 @@ export function ProfileSetup() {
             </div>
           </div>
 
-          {/* College */}
+          {}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               College / Department
@@ -78,7 +75,7 @@ export function ProfileSetup() {
             </select>
           </div>
 
-          {/* Program */}
+          {}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
               Program / Position
@@ -105,9 +102,6 @@ export function ProfileSetup() {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
-   ROLE SELECTOR — shown to admin-capable users so they can pick a role
-   ═══════════════════════════════════════════════════════════════════════════════ */
 export function RoleSelector() {
   const { currentUser, setView, setIsAdmin } = useAuth();
 
@@ -132,7 +126,7 @@ export function RoleSelector() {
         <p className="text-gray-500 mt-1 mb-8">Choose how you'd like to access the system</p>
 
         <div className="grid gap-4">
-          {/* Regular user */}
+          {}
           <button
             onClick={enterAsUser}
             className="flex items-center gap-4 p-5 border-2 border-gray-200 rounded-2xl hover:border-emerald-500 hover:bg-emerald-50 transition-all group text-left"
@@ -146,7 +140,7 @@ export function RoleSelector() {
             </div>
           </button>
 
-          {/* Admin */}
+          {}
           <button
             onClick={enterAsAdmin}
             className="flex items-center gap-4 p-5 border-2 border-gray-200 rounded-2xl hover:border-indigo-500 hover:bg-indigo-50 transition-all group text-left"
