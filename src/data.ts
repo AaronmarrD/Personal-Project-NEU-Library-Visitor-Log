@@ -1,7 +1,6 @@
 import { UserProfile, VisitLog } from "./types";
 import { VISIT_REASONS } from "./config";
 
-// ── Sample visitors ────────────────────────────────────────────────────────────
 const SAMPLE_VISITORS: Omit<UserProfile, "id" | "isBlocked" | "blockReason" | "createdAt">[] = [
   { name: "Maria Santos", email: "msantos@neu.edu.ph", college: "College of Computer Studies", program: "BS Computer Science", role: "Student", picture: "" },
   { name: "Juan dela Cruz", email: "jdelacruz@neu.edu.ph", college: "College of Engineering", program: "BS Civil Engineering", role: "Student", picture: "" },
@@ -18,18 +17,17 @@ const SAMPLE_VISITORS: Omit<UserProfile, "id" | "isBlocked" | "blockReason" | "c
   { name: "Camille Bautista", email: "cbautista@neu.edu.ph", college: "College of Dentistry", program: "Doctor of Dental Medicine", role: "Student", picture: "" },
   { name: "Daniel Pascual", email: "dpascual@neu.edu.ph", college: "Senior High School", program: "STEM Strand", role: "Student", picture: "" },
   { name: "Rachel Navarro", email: "rnavarro@neu.edu.ph", college: "Graduate School", program: "Master in Business Administration", role: "Student", picture: "" },
-  // Faculty
+
   { name: "Dr. Pedro Gonzales", email: "pgonzales@neu.edu.ph", college: "College of Computer Studies", program: "Professor - Computer Science", role: "Faculty", picture: "" },
   { name: "Prof. Elena Dimaculangan", email: "edimaculangan@neu.edu.ph", college: "College of Education", program: "Professor - Education", role: "Faculty", picture: "" },
   { name: "Dr. Ricardo Manalo", email: "rmanalo@neu.edu.ph", college: "College of Engineering", program: "Professor - Engineering", role: "Faculty", picture: "" },
   { name: "Prof. Carmen Soriano", email: "csoriano@neu.edu.ph", college: "College of Business and Accountancy", program: "Professor - Accountancy", role: "Faculty", picture: "" },
-  // Staff / Employees
+
   { name: "Rosa Martinez", email: "rmartinez@neu.edu.ph", college: "Administration", program: "Library Staff", role: "Staff", picture: "" },
   { name: "Eduardo Tan", email: "etan@neu.edu.ph", college: "Administration", program: "IT Department", role: "Employee", picture: "" },
   { name: "Lourdes Fernandez", email: "lfernandez@neu.edu.ph", college: "Administration", program: "Registrar Office", role: "Employee", picture: "" },
 ];
 
-// ── Helpers ────────────────────────────────────────────────────────────────────
 function randomItem<T>(arr: readonly T[] | T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -43,16 +41,14 @@ function randomDate(daysBack: number): Date {
   const past = new Date(now.getTime() - daysBack * 24 * 60 * 60 * 1000);
   const timestamp = past.getTime() + Math.random() * (now.getTime() - past.getTime());
   const d = new Date(timestamp);
-  // Library hours: 7 AM - 8 PM
+
   d.setHours(7 + Math.floor(Math.random() * 13), Math.floor(Math.random() * 60), 0, 0);
   return d;
 }
 
-// ── Seed function ──────────────────────────────────────────────────────────────
 export function seedDataIfNeeded(): void {
   if (localStorage.getItem("neu_data_seeded")) return;
 
-  // Create profiles
   const profiles: Record<string, UserProfile> = {};
   SAMPLE_VISITORS.forEach((v) => {
     profiles[v.email] = {
@@ -65,7 +61,6 @@ export function seedDataIfNeeded(): void {
   });
   localStorage.setItem("neu_profiles", JSON.stringify(profiles));
 
-  // Create visit logs (past 30 days, ~150 entries)
   const logs: VisitLog[] = [];
   const usableReasons = VISIT_REASONS.filter((r) => r !== "Other");
 
@@ -85,7 +80,6 @@ export function seedDataIfNeeded(): void {
     });
   }
 
-  // Sort by newest first
   logs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
   localStorage.setItem("neu_visit_logs", JSON.stringify(logs));
   localStorage.setItem("neu_data_seeded", "true");
