@@ -1,4 +1,3 @@
-
 export const GOOGLE_CLIENT_ID = "329328638777-akbrs0ugkboi00bol7u1mndhu5ppleg7.apps.googleusercontent.com";
 
 export const ADMIN_EMAILS: string[] = [
