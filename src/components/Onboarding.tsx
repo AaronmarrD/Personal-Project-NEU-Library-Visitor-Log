@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { COLLEGES, VISITOR_ROLES } from "../config";
-import { UserCircle, Users, Shield, BookOpen } from "lucide-react";
+import { UserCircle, Users, Shield } from "lucide-react";
+const NEU_LOGO = "https://upload.wikimedia.org/wikipedia/en/thumb/c/c6/New_Era_University.svg/250px-New_Era_University.svg.png";
 
 export function ProfileSetup() {
   const { currentUser, completeProfile } = useAuth();
