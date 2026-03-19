@@ -9,10 +9,8 @@ import { ProfileSetup, RoleSelector } from "./components/Onboarding";
 import { UserWelcome, ReasonSelection, VisitConfirmed } from "./components/UserFlow";
 import AdminDashboard from "./components/AdminDashboard";
 
-// Seed sample data on first load
 seedDataIfNeeded();
 
-/* ── View router (driven by auth state) ────────────────────────────────────── */
 function AppRouter() {
   const { currentView } = useAuth();
 
@@ -36,7 +34,6 @@ function AppRouter() {
   }
 }
 
-/* ── Root App ──────────────────────────────────────────────────────────────── */
 export default function App() {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
