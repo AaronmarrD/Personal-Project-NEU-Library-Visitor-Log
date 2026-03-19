@@ -27,9 +27,6 @@ const REASON_ICONS: Record<string, React.ReactNode> = {
   Other: <HelpCircle className="w-6 h-6" />,
 };
 
-/* ═══════════════════════════════════════════════════════════════════════════════
-   WELCOME PAGE
-   ═══════════════════════════════════════════════════════════════════════════════ */
 export function UserWelcome() {
   const { currentUser, setView, logout } = useAuth();
 
@@ -73,9 +70,6 @@ export function UserWelcome() {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
-   REASON SELECTION
-   ═══════════════════════════════════════════════════════════════════════════════ */
 export function ReasonSelection() {
   const { currentUser, setView } = useAuth();
   const { addVisitLog } = useData();
@@ -150,9 +144,6 @@ export function ReasonSelection() {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
-   CONFIRMATION
-   ═══════════════════════════════════════════════════════════════════════════════ */
 export function VisitConfirmed() {
   const { logout } = useAuth();
 
