@@ -1,5 +1,6 @@
 import { useAuth } from "../context/AuthContext";
-import { BookOpen, LogOut, ArrowLeftRight } from "lucide-react";
+import { LogOut, ArrowLeftRight } from "lucide-react";
+const NEU_LOGO = "https://upload.wikimedia.org/wikipedia/en/thumb/c/c6/New_Era_University.svg/250px-New_Era_University.svg.png";
 
 export default function Header() {
   const { currentUser, isAdmin, logout, setView, setIsAdmin, isAdminEmail } = useAuth();
