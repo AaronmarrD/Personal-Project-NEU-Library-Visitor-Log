@@ -2,14 +2,12 @@ import React, { createContext, useContext, useState, useCallback } from "react";
 import { UserProfile, AppView } from "../types";
 import { ADMIN_EMAILS } from "../config";
 
-/* ── JWT decoder (no library needed) ──────────────────────────────────────── */
 function decodeJwt(token: string): Record<string, unknown> {
   const base64Url = token.split(".")[1];
   const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
   return JSON.parse(atob(base64));
 }
 
-/* ── Context types ────────────────────────────────────────────────────────── */
 interface AuthState {
   currentUser: UserProfile | null;
   isAdmin: boolean;
@@ -35,7 +33,6 @@ export const useAuth = () => {
   return ctx;
 };
 
-/* ── Provider ─────────────────────────────────────────────────────────────── */
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, setState] = useState<AuthState>({
     currentUser: null,
@@ -49,7 +46,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     [],
   );
 
-  /* Google login handler */
   const loginWithGoogle = useCallback(
     (credentialResponse: { credential?: string }) => {
       if (!credentialResponse.credential) return;
@@ -63,7 +59,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const { email, name, picture, sub } = decoded;
 
-      // Check existing profile
       const profiles: Record<string, UserProfile> = JSON.parse(
         localStorage.getItem("neu_profiles") || "{}",
       );
@@ -80,7 +75,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           return;
         }
 
-        // Update name/picture from Google in case they changed
         existing.name = name;
         if (picture) existing.picture = picture;
         profiles[email] = existing;
@@ -93,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           currentView: isAdminEmail(email) ? "role-select" : "user-welcome",
         }));
       } else {
-        // New user — needs profile setup
+
         const newProfile: UserProfile = {
           id: sub,
           email,
@@ -117,7 +111,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     [isAdminEmail],
   );
 
-  /* Complete / update profile (first-time setup) */
   const completeProfile = useCallback(
     (data: Partial<UserProfile>) => {
       setState((prev) => {
@@ -138,7 +131,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     [isAdminEmail],
   );
 
-  /* Refresh the current user from localStorage (useful after admin edits) */
   const refreshUser = useCallback(() => {
     setState((prev) => {
       if (!prev.currentUser) return prev;
