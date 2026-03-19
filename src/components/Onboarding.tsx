@@ -118,8 +118,8 @@ export function RoleSelector() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
       <div className="animate-fade-up bg-white rounded-3xl shadow-2xl p-10 max-w-lg w-full text-center">
-        <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl mb-5 shadow-lg">
-          <BookOpen className="w-10 h-10 text-white" />
+        <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl mb-5 shadow-lg border border-gray-100 p-2">
+          <img src={NEU_LOGO} alt="NEU Seal" className="w-full h-full object-contain" />
         </div>
         <h2 className="text-2xl font-bold text-gray-900">
           Welcome, {currentUser?.name?.split(" ")[0]}!
