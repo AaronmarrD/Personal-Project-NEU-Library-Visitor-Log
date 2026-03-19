@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <header className="bg-white/90 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Brand */}
+        {}
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
             <BookOpen className="w-5 h-5 text-white" />
@@ -32,7 +32,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Right side */}
+        {}
         <div className="flex items-center gap-3">
           {showSwitch && (
             <button
